@@ -7,6 +7,8 @@ import styles from "./Navbar.module.css";
 import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 
+import Lenis from "lenis";
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -30,8 +32,8 @@ export default function Navbar() {
     if (pathname === "/") {
       e.preventDefault();
       setIsOpen(false);
-      // @ts-ignore
-      const lenis = window.lenis;
+      
+      const lenis = (window as unknown as { lenis?: Lenis }).lenis;
       
       if (targetId === "top") {
         if (lenis) {

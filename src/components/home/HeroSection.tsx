@@ -5,6 +5,7 @@ import gsap from "gsap";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import styles from "./HeroSection.module.css";
+import Lenis from "lenis";
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -189,15 +190,15 @@ export default function HeroSection() {
           <div className={styles.ctas}>
             <a href="#work" onClick={(e) => {
               e.preventDefault();
-              // @ts-ignore
-              window.lenis?.scrollTo('#work', { offset: -100 });
+              const lenis = (window as unknown as { lenis?: Lenis }).lenis;
+              lenis?.scrollTo('#work', { offset: -100 });
             }} className={`hero-cta btn-primary`}>
               VIEW MY WORK <ArrowRight size={16} />
             </a>
             <a href="#contact" onClick={(e) => {
               e.preventDefault();
-              // @ts-ignore
-              window.lenis?.scrollTo('#contact', { offset: -100 });
+              const lenis = (window as unknown as { lenis?: Lenis }).lenis;
+              lenis?.scrollTo('#contact', { offset: -100 });
             }} className={`hero-cta btn-primary ${styles.secondaryCta}`}>
               LET'S WORK TOGETHER <ArrowRight size={16} />
             </a>

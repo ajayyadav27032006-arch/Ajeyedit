@@ -15,8 +15,7 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
       touchMultiplier: 2,
     });
 
-    // @ts-ignore
-    window.lenis = lenis;
+    (window as unknown as { lenis?: Lenis }).lenis = lenis;
 
     function raf(time: number) {
       lenis.raf(time);
@@ -27,8 +26,7 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
 
     return () => {
       lenis.destroy();
-      // @ts-ignore
-      delete window.lenis;
+      delete (window as unknown as { lenis?: Lenis }).lenis;
     };
   }, []);
 
