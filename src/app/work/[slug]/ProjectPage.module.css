@@ -1,0 +1,167 @@
+.page {
+  padding-top: calc(var(--spacing-xl) + 2rem);
+}
+
+.hero {
+  margin-bottom: var(--spacing-xl);
+}
+
+.heroMeta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+  color: var(--accent-red);
+  margin-bottom: 1rem;
+}
+
+.heroDetails {
+  margin-top: 2rem;
+  display: flex;
+  gap: 3rem;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.heroDetails strong {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  margin-right: 0.5rem;
+  opacity: 0.7;
+}
+
+.heroVideoContainer {
+  margin-top: 4rem;
+}
+
+.heroVideoPlaceholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-red);
+  margin: 0 0 0.5rem 0;
+}
+
+.contentGrid p {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.rolesList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pill {
+  padding: 0.5rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+.approachBlock {
+  margin-bottom: 3rem;
+}
+
+.approachBlock h4 {
+  font-size: 1.25rem;
+  margin: 0 0 1rem 0;
+  color: var(--accent-red);
+}
+
+.approachBlock p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.beforeAfter {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.baPlaceholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.2em;
+}
+
+.baArrow {
+  font-size: 2rem;
+  color: var(--accent-red);
+}
+
+.nextProject {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-xl) 0;
+}
+
+.nextLink {
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.nextLink:hover {
+  color: var(--accent-red);
+}
+
+.nextIcon {
+  margin-left: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.nextLink:hover .nextIcon {
+  transform: translateX(20px);
+}
+
+@media (max-width: 768px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .heroDetails {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
