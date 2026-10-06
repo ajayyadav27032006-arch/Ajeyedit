@@ -3,18 +3,46 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
 import styles from "./WorkSection.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
-  { id: "01", title: "The Art of Pacing", category: "DOCUMENTARY", year: "2025", slug: "project-01" },
-  { id: "02", title: "Creator Life", category: "LONG-FORM", year: "2025", slug: "project-02" },
-  { id: "03", title: "Visual Hooks", category: "SHORT-FORM", year: "2024", slug: "project-03" },
-  { id: "04", title: "Brand Story", category: "PERSONAL BRAND", year: "2024", slug: "project-04" },
-  { id: "05", title: "Commercial Impact", category: "BRAND / COMMERCIAL", year: "2024", slug: "project-05" },
-  { id: "06", title: "Cinematic Reel", category: "MONTAGE", year: "2023", slug: "project-06" },
+const categories = [
+  {
+    id: "yt-long",
+    title: "YT Long Videos",
+    type: "horizontal",
+    videos: [
+      "https://drive.google.com/file/d/1uaUT_Qo4O3Ml7m8BnxayvHOQ6h0dIbj9/preview",
+      "https://drive.google.com/file/d/1Xha_P5K8t14Jjh8Spcoy0tq0c1xVMq6D/preview",
+      "https://drive.google.com/file/d/1L9XOI3exkFI_sWUScVOEdjGZIzQkWJtO/preview",
+      "https://drive.google.com/file/d/19sbRO3M1uIF4a5e_8JB2Y9QgswzIxKLG/preview"
+    ]
+  },
+  {
+    id: "reels",
+    title: "Reel Videos",
+    type: "vertical",
+    videos: [
+      "https://drive.google.com/file/d/1AugRQ9fSoYDVhJmD87FLgH4OOrUImB9F/preview",
+      "https://drive.google.com/file/d/13lYJq1yfOCSfJ1gFQ5mSkdRlM0Z3y47r/preview",
+      "https://drive.google.com/file/d/1yHvY916SXqKe23D5kmHAb0avTUrkSHiH/preview",
+      "https://drive.google.com/file/d/1z94riTAxQIHeFqzG3hPgZetY4Tk31pOQ/preview",
+      "https://drive.google.com/file/d/1Omkc5o8QUxBHsGWVlC8SiIPtUV62X5zz/preview"
+    ]
+  },
+  {
+    id: "ai-videos",
+    title: "AI Videos",
+    type: "horizontal",
+    videos: [
+      "https://drive.google.com/file/d/19QTsV9hyM3WcrOpiHHyke-LOH5yY0GZ1/preview",
+      "https://drive.google.com/file/d/1YtKfnsPaMF3jf_DSX9Yh5JUvuHVraq9U/preview",
+      "https://drive.google.com/file/d/1Xtk8bFM0lwZgw5Lf40551rgc30dsU1Da/preview",
+      "https://drive.google.com/file/d/1ysRcaahIYSFlSzC-5hNz8RMvUmcw8QWx/preview",
+      "https://drive.google.com/file/d/1dcX4qJedZOzeoAgXScRYxRKh65w72YND/preview"
+    ]
+  }
 ];
 
 export default function WorkSection() {
@@ -33,15 +61,15 @@ export default function WorkSection() {
         ease: "power3.out"
       });
 
-      gsap.from(".work-card", {
+      gsap.from(".category-block", {
         scrollTrigger: {
-          trigger: ".work-list",
-          start: "top 75%",
+          trigger: containerRef.current,
+          start: "top 60%",
         },
-        y: 50,
+        y: 40,
         opacity: 0,
         duration: 0.8,
-        stagger: 0.2,
+        stagger: 0.15,
         ease: "power3.out"
       });
     }, containerRef);
@@ -56,37 +84,34 @@ export default function WorkSection() {
           <h2 className="text-h2">SELECTED WORK</h2>
           <p className="text-body">Stories, ideas and brands &mdash; shaped frame by frame.</p>
         </div>
+      </div>
 
-        <div className={`work-list ${styles.grid}`}>
-          {projects.map((project) => (
-            <Link 
-              href={`/work/${project.slug}`} 
-              key={project.id} 
-              className={`work-card ${styles.card}`}
-
-            >
-              <div className={styles.thumbnailContainer}>
-                {/* 
-                  Real Video implementation:
-                  <video src={`/assets/projects/${project.slug}/preview.mp4`} muted loop playsInline className={styles.video} />
-                */}
-                <div className={styles.placeholderBg}></div>
-                <div className={styles.hoverOverlay}></div>
+      <div className={styles.categoriesContainer}>
+        {categories.map((category) => (
+          <div key={category.id} className={`category-block ${styles.categoryBlock}`}>
+            <div className="container">
+              <h3 className={styles.categoryTitle}>{category.title}</h3>
+            </div>
+            
+            <div className={styles.scrollContainer}>
+              <div className={styles.scrollTrack}>
+                {category.videos.map((url, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`${styles.videoWrapper} ${category.type === 'vertical' ? styles.verticalVideo : styles.horizontalVideo}`}
+                  >
+                    <iframe 
+                      src={url} 
+                      className={styles.iframe}
+                      allow="autoplay"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                ))}
               </div>
-              <div className={styles.meta}>
-                <div className={styles.metaTop}>
-                  <span className={styles.projectId}>PROJECT {project.id}</span>
-                  <span className={styles.category}>{project.category}</span>
-                </div>
-                <h3 className={styles.title}>{project.title}</h3>
-                <div className={styles.metaBottom}>
-                  <span className={styles.year}>{project.year}</span>
-                  <span className={styles.viewLink}>VIEW PROJECT &rarr;</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
