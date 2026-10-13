@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Play, ArrowRight } from "lucide-react";
 import styles from "./WorkSection.module.css";
+import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -184,6 +185,19 @@ export default function WorkSection() {
     return () => ctx.revert();
   }, []);
 
+  const handleStartProjectClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const lenis = (window as unknown as { lenis?: Lenis }).lenis;
+    if (lenis) {
+      lenis.scrollTo("#contact", { offset: -70 });
+    } else {
+      const contactElem = document.getElementById("contact");
+      if (contactElem) {
+        contactElem.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <section id="work" className={styles.section} ref={containerRef}>
       <div className="container">
@@ -199,7 +213,7 @@ export default function WorkSection() {
             </h2>
           </div>
 
-          <a href="#contact" className={styles.viewAllBtn}>
+          <a href="#contact" onClick={handleStartProjectClick} className={styles.viewAllBtn}>
             <span>Start a Project</span>
             <ArrowRight size={15} />
           </a>
