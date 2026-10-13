@@ -26,8 +26,12 @@ export default function StatsSection() {
         <div className={styles.marqueeContent}>
           {textElement}
           {textElement}
+          {textElement}
+          {textElement}
         </div>
         <div className={styles.marqueeContent} aria-hidden="true">
+          {textElement}
+          {textElement}
           {textElement}
           {textElement}
         </div>

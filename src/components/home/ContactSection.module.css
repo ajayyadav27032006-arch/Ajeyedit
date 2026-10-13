@@ -1,52 +1,158 @@
 .section {
-  padding-bottom: var(--spacing-xl);
+  background-color: var(--color-navy); /* Mystic Navy #13273F */
+  color: var(--color-warm-white);
+  padding: calc(var(--spacing-xl) + 1rem) 0;
+  position: relative;
 }
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 5.5rem;
+  align-items: flex-start;
 }
 
 .textContent {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
-.accent {
-  color: var(--accent-red);
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-pearl);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
 
-.info {
-  margin-top: 2rem;
+.headline {
+  font-family: var(--font-serif);
+  font-size: clamp(2.75rem, 5.5vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-warm-white);
+  margin: 0;
+}
+
+.highlightBox {
+  background-color: var(--color-pearl);
+  color: var(--color-navy);
+  padding: 0.04em 0.35em 0.12em 0.3em;
+  border-radius: 6px;
+  display: inline-block;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  font-style: italic;
+  font-weight: 800;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  margin-top: 0.15em;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(247, 243, 237, 0.85);
+  margin: 0;
+  max-width: 520px;
+}
+
+.contactCards {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  font-size: 0.875rem;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.info strong {
+.contactCard {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: rgba(17, 19, 17, 0.35);
+  border: 1px solid rgba(211, 194, 174, 0.18);
+  padding: 1.15rem 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.contactCard:hover {
+  background: rgba(17, 19, 17, 0.6);
+  border-color: var(--color-pearl);
+  transform: translateX(4px);
+}
+
+.contactIconCircle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--color-inferno);
+  color: var(--color-warm-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contactDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.contactLabel {
+  font-family: var(--font-body);
+  font-size: 0.725rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.5;
+  color: var(--color-pearl);
+  opacity: 0.8;
 }
 
-.info a {
-  font-size: 1.25rem;
-  font-weight: 500;
-  transition: color 0.3s ease;
+.contactValue {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-warm-white);
 }
 
-.info a:hover {
-  color: var(--accent-red);
+.socialRow {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 1.5rem;
 }
 
+.socialLink {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(247, 243, 237, 0.08);
+  border: 1px solid rgba(211, 194, 174, 0.2);
+  color: var(--color-warm-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+  background: var(--color-inferno);
+  border-color: var(--color-inferno);
+  transform: translateY(-2px);
+}
+
+/* Form Container */
 .formContent {
-  background: rgba(255, 255, 255, 0.02);
-  padding: 3rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #111311; /* Near Black */
+  padding: 3rem 2.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(211, 194, 174, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
 }
 
 .form {
@@ -58,7 +164,7 @@
 .inputRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .inputGroup {
@@ -68,58 +174,88 @@
 }
 
 .inputGroup label {
+  font-family: var(--font-body);
   font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.6;
+  letter-spacing: 0.08em;
+  color: var(--color-pearl);
+  opacity: 0.85;
 }
 
 .inputGroup input,
 .inputGroup select,
 .inputGroup textarea {
   width: 100%;
-  background: none;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0.75rem 0;
-  color: var(--foreground);
-  font-family: inherit;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+  background: rgba(247, 243, 237, 0.04);
+  border: 1px solid rgba(211, 194, 174, 0.2);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  color: var(--color-warm-white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-.inputGroup select {
-  background-color: var(--background);
+.inputGroup select option {
+  background-color: #111311;
+  color: #fff;
 }
 
 .inputGroup input:focus,
 .inputGroup select:focus,
 .inputGroup textarea:focus {
   outline: none;
-  border-bottom-color: var(--accent-red);
+  border-color: var(--color-inferno);
+  background: rgba(247, 243, 237, 0.08);
 }
 
 .submitBtn {
-  margin-top: 1rem;
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background-color: var(--color-inferno);
+  color: var(--color-warm-white);
+  padding: 0.95rem 2.25rem;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 0.925rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 15px rgba(78, 0, 0, 0.35);
   cursor: pointer;
-  background: none;
-  border: none;
-  padding: 1rem 0;
-  justify-content: flex-start;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: 0.5rem;
+}
+
+.submitBtn:hover {
+  background-color: var(--color-inferno-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(78, 0, 0, 0.55);
+}
+
+.submitBtn svg {
+  transition: transform 0.3s ease;
+}
+
+.submitBtn:hover svg {
+  transform: translateX(4px);
 }
 
 @media (max-width: 1024px) {
   .container {
     grid-template-columns: 1fr;
-    gap: 4rem;
+    gap: 3.5rem;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .formContent {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
+  
   .inputRow {
     grid-template-columns: 1fr;
   }

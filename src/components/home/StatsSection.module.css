@@ -1,8 +1,8 @@
 .stats {
-  padding: 1.5rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: var(--background);
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: #151816;
   overflow: hidden;
   white-space: nowrap;
   display: flex;
@@ -15,27 +15,37 @@
 
 .marqueeContent {
   display: flex;
-  animation: scrollText 25s linear infinite;
+  align-items: center;
+  animation: scrollText 32s linear infinite;
 }
 
 .statText {
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 0 1rem;
-  color: var(--foreground);
+  padding: 0 1.25rem;
+  color: var(--color-warm-white);
   display: inline-flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .highlight {
-  color: var(--accent-red);
+  font-family: var(--font-serif);
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #4a90e2; /* Clear, visible vibrant blue */
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 12px rgba(74, 144, 226, 0.3);
 }
 
 .separator {
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--color-pearl);
+  opacity: 0.4;
   margin: 0 1rem;
+  font-size: 1.2rem;
 }
 
 @keyframes scrollText {
@@ -45,6 +55,6 @@
 
 @media (max-width: 768px) {
   .stats {
-    padding: 1rem 0;
+    padding: 1.15rem 0;
   }
 }

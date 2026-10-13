@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -16,6 +17,8 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     });
 
     (window as unknown as { lenis?: Lenis }).lenis = lenis;
+
+    lenis.on("scroll", ScrollTrigger.update);
 
     function raf(time: number) {
       lenis.raf(time);

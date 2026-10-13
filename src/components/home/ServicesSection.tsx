@@ -9,20 +9,40 @@ gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
-    title: "DOCUMENTARY EDITING",
-    desc: "Story-driven editing focused on narrative structure, pacing, B-roll, sound design and visual progression."
+    num: "01",
+    tag: "Narrative & Pacing",
+    title: "Video Editing",
+    desc: "Cinematic and engaging edits for brands, creators, and businesses with thoughtful pacing and narrative flow."
   },
   {
-    title: "TALKING-HEAD EDITING",
-    desc: "Dynamic editing using pacing, jump cuts, B-roll, captions, motion graphics and sound design to maintain viewer attention."
+    num: "02",
+    tag: "High Conversion",
+    title: "Commercial & Ads",
+    desc: "High-impact edits for product videos, brand films, and advertisements crafted for audience conversion."
   },
   {
-    title: "YOUTUBE EDITING",
-    desc: "Long-form content structured around storytelling, retention, pacing and visual engagement."
+    num: "03",
+    tag: "Story & Depth",
+    title: "Documentary Editing",
+    desc: "Story-driven edits with emotional depth, multi-layered interviews, and clear narrative arcs."
   },
   {
-    title: "SHORT-FORM EDITING",
-    desc: "Reels and short-form content optimized for fast pacing, strong hooks, visual transitions and social-media viewing."
+    num: "04",
+    tag: "Short Form & Hooks",
+    title: "Social Media Reels",
+    desc: "Short-form edits for Instagram, YouTube Shorts, and TikTok with high-retention hooks and dynamic rhythm."
+  },
+  {
+    num: "05",
+    tag: "Look & Atmosphere",
+    title: "Color Grading",
+    desc: "Professional color correction, look development, and cinematic grading that gives footage identity and tone."
+  },
+  {
+    num: "06",
+    tag: "Titles & Motion FX",
+    title: "Motion Graphics",
+    desc: "Clean typography, graphic transitions, visual effects, and animated assets designed to elevate storytelling."
   }
 ];
 
@@ -31,16 +51,30 @@ export default function ServicesSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".service-item", {
+      gsap.from(".services-header-anim", {
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 75%",
+          start: "top 80%",
+          once: true,
         },
-        y: 30,
+        y: 25,
+        opacity: 0,
+        duration: 0.75,
+        ease: "power3.out",
+        clearProps: "all"
+      });
+
+      gsap.from(".services-grid-anim", {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          once: true,
+        },
+        y: 25,
         opacity: 0,
         duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out"
+        ease: "power3.out",
+        clearProps: "all"
       });
     }, containerRef);
 
@@ -48,18 +82,31 @@ export default function ServicesSection() {
   }, []);
 
   return (
-    <section className="section" ref={containerRef}>
-      <div className={`container ${styles.container}`}>
-        <h2 className={`text-h2 ${styles.header}`}>WHAT I DO</h2>
+    <section id="services" className={styles.section} ref={containerRef}>
+      <div className="container">
+
+        <div className={`services-header-anim ${styles.header}`}>
+          <div className={styles.eyebrow}>
+            <span>CAPABILITIES & CRAFT</span>
+          </div>
+          <h2 className={styles.headline}>
+            What I Bring to the <span className={styles.accent}>Timeline.</span>
+          </h2>
+        </div>
         
-        <div className={styles.grid}>
+        <div className={`services-grid-anim ${styles.grid}`}>
           {services.map((service, idx) => (
-            <div key={idx} className={`service-item ${styles.serviceCard}`}>
+            <div key={idx} className={styles.serviceCard}>
+              <div className={styles.cardHeader}>
+                <span className={styles.number}>{service.num}</span>
+                <span className={styles.tag}>{service.tag}</span>
+              </div>
               <h3 className={styles.title}>{service.title}</h3>
               <p className={styles.desc}>{service.desc}</p>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );

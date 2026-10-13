@@ -55,7 +55,7 @@ export default function Loader() {
   return (
     <div ref={loaderRef} className={styles.loader}>
       <div ref={textRef} className={styles.content}>
-        <h1 className={styles.title}>AJEY EDIT</h1>
+        <h1 className={styles.title}>ajey.edit</h1>
         <p className={styles.subtitle}>CREATIVE EDITOR / MOTION DESIGNER</p>
         <div className={styles.progress}>
           {progress.toString().padStart(2, "0")} &mdash; 100

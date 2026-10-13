@@ -2,16 +2,16 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 12px;
-  height: 12px;
-  background-color: var(--foreground);
+  width: 14px;
+  height: 14px;
+  background-color: #ffffff;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 99999;
   transform: translate(-50%, -50%);
-  transition: width 0.3s cubic-bezier(0.76, 0, 0.24, 1), 
-              height 0.3s cubic-bezier(0.76, 0, 0.24, 1),
-              background-color 0.3s ease;
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,31 +24,30 @@
 
 .text {
   opacity: 0;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
+  font-family: var(--font-body);
   font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--background);
+  letter-spacing: 0.08em;
+  color: #000000;
   text-transform: uppercase;
   white-space: nowrap;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .cursor.hover {
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-  border: 1px solid var(--accent-red);
-  mix-blend-mode: normal;
+  width: 48px;
+  height: 48px;
+  background-color: #ffffff;
+  mix-blend-mode: difference;
 }
 
 .cursor.active {
-  width: 80px;
-  height: 80px;
-  background-color: var(--accent-red);
-  mix-blend-mode: normal;
+  width: 82px;
+  height: 82px;
+  background-color: #ffffff;
+  mix-blend-mode: difference;
 }
 
 .cursor.active .text {
   opacity: 1;
-  color: #fff;
 }
