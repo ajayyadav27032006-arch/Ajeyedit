@@ -156,7 +156,19 @@ export default function TestimonialsSection() {
 
               {/* Initial / Paused Overlay */}
               {!isPlaying && (
-                <div className={styles.playOverlay} onClick={togglePlay}>
+                <div
+                  className={styles.playOverlay}
+                  onClick={togglePlay}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={hasStarted ? "Resume client feedback video" : "Watch client feedback video"}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      togglePlay();
+                    }
+                  }}
+                >
                   <div className={styles.playCircle}>
                     <Play size={24} fill="#F7F3ED" />
                   </div>

@@ -18,7 +18,12 @@ export default function Template({ children }: { children: React.ReactNode }) {
           scaleY: 0, 
           transformOrigin: "top", 
           duration: 0.7, 
-          ease: "power4.inOut" 
+          ease: "power4.inOut",
+          onComplete: () => {
+            if (overlayRef.current) {
+              overlayRef.current.style.pointerEvents = "none";
+            }
+          }
         }
       );
     }
@@ -28,6 +33,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <>
       <div 
         ref={overlayRef}
+        aria-hidden="true"
         style={{
           position: "fixed",
           top: 0,

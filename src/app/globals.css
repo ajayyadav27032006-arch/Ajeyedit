@@ -50,6 +50,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (pointer: coarse) {
+  html,
+  body {
+    cursor: auto;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;

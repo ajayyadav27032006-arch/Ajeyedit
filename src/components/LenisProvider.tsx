@@ -20,14 +20,17 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
 
     lenis.on("scroll", ScrollTrigger.update);
 
+    let rafId: number;
+
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
       delete (window as unknown as { lenis?: Lenis }).lenis;
     };

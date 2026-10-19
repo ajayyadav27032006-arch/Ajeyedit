@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import styles from "./ProjectPage.module.css";
 import { ArrowRight } from "lucide-react";
 
@@ -27,12 +28,25 @@ function getProjectBySlug(slug: string) {
       visualRhythm: slug === "project-05" ? "Used motion graphics to visually break down the math behind the 50% vs 8.4% return to educate the audience." : "Synced hard cuts to the beat while keeping smooth J/L cuts for dialogues.",
     },
     deliverables: "1x Hero Commercial (1m), 3x Shorts",
-    nextProject: slug === "project-05" ? "project-01" : `project-0${parseInt(slug.split('-')[1]) + 1}`,
+    nextProject: slug === "project-05" ? "project-01" : `project-0${(() => {
+      const match = slug.match(/\d+/);
+      return match ? parseInt(match[0]) + 1 : 2;
+    })()}`,
   };
 }
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
-  const project = getProjectBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug || "project-01");
+  return {
+    title: `${project.title} — ajey.edit`,
+    description: project.description,
+  };
+}
+
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug || "project-01");
 
   return (
     <div className={styles.page}>

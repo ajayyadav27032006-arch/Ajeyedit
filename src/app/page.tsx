@@ -5,7 +5,6 @@ import ServicesSection from "@/components/home/ServicesSection";
 import ProcessSection from "@/components/home/ProcessSection";
 import AboutSection from "@/components/home/AboutSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
-import ShowreelSection from "@/components/home/ShowreelSection";
 import ContactSection from "@/components/home/ContactSection";
 
 export default function Home() {

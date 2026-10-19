@@ -88,7 +88,7 @@ export default function CustomCursor() {
   if (isTouchDevice) return null;
 
   return (
-    <div ref={cursorRef} className={styles.cursor}>
+    <div ref={cursorRef} className={styles.cursor} aria-hidden="true">
       <div className={styles.dot}></div>
       <div ref={cursorTextRef} className={styles.text}></div>
     </div>

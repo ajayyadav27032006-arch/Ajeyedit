@@ -92,13 +92,19 @@ export default function Navbar() {
           className={styles.mobileToggle} 
           onClick={toggleMenu}
           aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-navigation"
         >
           <span>{isOpen ? "CLOSE" : "MENU"}</span>
         </button>
       </nav>
 
       {/* Mobile Menu */}
-      <div className={`${styles.mobileMenu} ${isOpen ? styles.open : ""}`}>
+      <div
+        id="mobile-navigation"
+        className={`${styles.mobileMenu} ${isOpen ? styles.open : ""}`}
+        aria-hidden={!isOpen}
+      >
         <div className={styles.mobileLinks}>
           <Link href="/#work" onClick={(e) => handleNavClick(e, "#work")}>Work</Link>
           <Link href="/#about" onClick={(e) => handleNavClick(e, "#about")}>About</Link>

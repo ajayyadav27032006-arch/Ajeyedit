@@ -357,10 +357,11 @@ export default function ContactSection() {
               {/* Name & Email Row */}
               <div className={styles.inputRow}>
                 <div className={styles.inputGroup}>
-                  <label>
+                  <label htmlFor="client-name">
                     Your Name <span className={styles.requiredStar}>*</span>
                   </label>
                   <input
+                    id="client-name"
                     type="text"
                     name="name"
                     value={formData.name}
@@ -371,10 +372,11 @@ export default function ContactSection() {
                 </div>
 
                 <div className={styles.inputGroup}>
-                  <label>
+                  <label htmlFor="client-email">
                     Email Address <span className={styles.requiredStar}>*</span>
                   </label>
                   <input
+                    id="client-email"
                     type="email"
                     name="email"
                     value={formData.email}
@@ -388,10 +390,11 @@ export default function ContactSection() {
               {/* Phone & Project Type Row */}
               <div className={styles.inputRow}>
                 <div className={styles.inputGroup}>
-                  <label>
+                  <label htmlFor="client-phone">
                     Phone Number <span className={styles.requiredStar}>*</span>
                   </label>
                   <input
+                    id="client-phone"
                     type="tel"
                     name="phone"
                     value={formData.phone}
@@ -402,8 +405,9 @@ export default function ContactSection() {
                 </div>
 
                 <div className={styles.inputGroup}>
-                  <label>Project Type</label>
+                  <label htmlFor="client-project-type">Project Type</label>
                   <select
+                    id="client-project-type"
                     name="projectType"
                     value={formData.projectType}
                     onChange={handleChange}
@@ -421,8 +425,9 @@ export default function ContactSection() {
               {/* Budget & Timeline Row */}
               <div className={styles.inputRow}>
                 <div className={styles.inputGroup}>
-                  <label>Estimated Budget</label>
+                  <label htmlFor="client-budget">Estimated Budget</label>
                   <input
+                    id="client-budget"
                     type="text"
                     name="budget"
                     value={formData.budget}
@@ -432,8 +437,9 @@ export default function ContactSection() {
                 </div>
 
                 <div className={styles.inputGroup}>
-                  <label>Estimated Timeline</label>
+                  <label htmlFor="client-timeline">Estimated Timeline</label>
                   <input
+                    id="client-timeline"
                     type="text"
                     name="timeline"
                     value={formData.timeline}
@@ -445,8 +451,9 @@ export default function ContactSection() {
 
               {/* Footage / Drive Reference Link (Up) */}
               <div className={styles.inputGroup}>
-                <label>Footage / Drive Reference Link</label>
+                <label htmlFor="client-reference">Footage / Drive Reference Link</label>
                 <input
+                  id="client-reference"
                   type="url"
                   name="reference"
                   value={formData.reference}
@@ -457,10 +464,11 @@ export default function ContactSection() {
 
               {/* Project Details / Vision (Down - Optional) */}
               <div className={styles.inputGroup}>
-                <label>
+                <label htmlFor="client-description">
                   Project Details / Creative Vision
                 </label>
                 <textarea
+                  id="client-description"
                   name="description"
                   value={formData.description}
                   onChange={handleChange}

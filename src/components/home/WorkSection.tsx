@@ -278,10 +278,12 @@ export default function WorkSection() {
         </div>
 
         {/* Category Filter Tabs */}
-        <div className={styles.filterBar}>
+        <div className={styles.filterBar} role="tablist" aria-label="Project category filter">
           {filterTabs.map((tab) => (
             <button
               key={tab.id}
+              role="tab"
+              aria-selected={activeFilter === tab.id}
               onClick={() => setActiveFilter(tab.id)}
               className={`${styles.filterBtn} ${activeFilter === tab.id ? styles.filterBtnActive : ""}`}
             >
