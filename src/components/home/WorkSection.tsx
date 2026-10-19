@@ -160,6 +160,61 @@ const filterTabs = [
   { id: "ai-videos", label: "AI Videos" }
 ];
 
+function ProjectVideoCard({ project }: { project: VideoItem }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    // Load iframe when card is within 300px of the viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`${styles.projectCard} ${project.type === 'vertical' ? styles.verticalCard : styles.horizontalCard}`}
+    >
+      <div className={styles.videoWrapper}>
+        {isInView ? (
+          <iframe
+            src={project.url}
+            className={styles.iframe}
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            loading="lazy"
+            title={project.title}
+          ></iframe>
+        ) : null}
+      </div>
+
+      <div className={styles.cardInfo}>
+        <div className={styles.cardHeader}>
+          <h3 className={styles.cardTitle}>{project.title}</h3>
+          <span className={styles.yearBadge}>{project.year}</span>
+        </div>
+        <div className={styles.cardSub}>
+          <span className={styles.categoryBadge}>{project.categoryTag}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function WorkSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeFilter, setActiveFilter] = useState("all");
@@ -238,31 +293,7 @@ export default function WorkSection() {
         {/* Project Grid */}
         <div className={styles.projectGrid}>
           {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className={`${styles.projectCard} ${project.type === 'vertical' ? styles.verticalCard : styles.horizontalCard}`}
-            >
-              <div className={styles.videoWrapper}>
-                {/* Original Google Drive video iframe - URL preserved exactly */}
-                <iframe
-                  src={project.url}
-                  className={styles.iframe}
-                  allow="autoplay"
-                  allowFullScreen
-                  title={project.title}
-                ></iframe>
-              </div>
-
-              <div className={styles.cardInfo}>
-                <div className={styles.cardHeader}>
-                  <h3 className={styles.cardTitle}>{project.title}</h3>
-                  <span className={styles.yearBadge}>{project.year}</span>
-                </div>
-                <div className={styles.cardSub}>
-                  <span className={styles.categoryBadge}>{project.categoryTag}</span>
-                </div>
-              </div>
-            </div>
+            <ProjectVideoCard key={project.id} project={project} />
           ))}
         </div>
 

@@ -19,6 +19,24 @@ export default function TestimonialsSection() {
   const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting && el && !el.paused) {
+          el.pause();
+          setIsPlaying(false);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".testimonial-anim", {
         scrollTrigger: {
@@ -129,7 +147,7 @@ export default function TestimonialsSection() {
                 src="/videos/creator-trust.mp4"
                 poster="/videos/creator-trust-poster.jpg"
                 playsInline
-                preload="metadata"
+                preload="none"
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
                 onEnded={() => setIsPlaying(false)}
