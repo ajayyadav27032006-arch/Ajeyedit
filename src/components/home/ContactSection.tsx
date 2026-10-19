@@ -389,7 +389,7 @@ export default function ContactSection() {
               <div className={styles.inputRow}>
                 <div className={styles.inputGroup}>
                   <label>
-                    Phone Number
+                    Phone Number <span className={styles.requiredStar}>*</span>
                   </label>
                   <input
                     type="tel"
@@ -397,6 +397,7 @@ export default function ContactSection() {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="e.g. +91 98765 43210"
+                    required
                   />
                 </div>
 
@@ -442,22 +443,7 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              {/* Project Details / Vision */}
-              <div className={styles.inputGroup}>
-                <label>
-                  Project Details / Creative Vision <span className={styles.requiredStar}>*</span>
-                </label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  placeholder="Tell me about your project, storytelling style, pacing, references, and goals..."
-                  rows={4}
-                  required
-                />
-              </div>
-
-              {/* Footage / Drive Reference Link */}
+              {/* Footage / Drive Reference Link (Up) */}
               <div className={styles.inputGroup}>
                 <label>Footage / Drive Reference Link</label>
                 <input
@@ -466,6 +452,20 @@ export default function ContactSection() {
                   value={formData.reference}
                   onChange={handleChange}
                   placeholder="https://drive.google.com/... or wetransfer.com/..."
+                />
+              </div>
+
+              {/* Project Details / Vision (Down - Optional) */}
+              <div className={styles.inputGroup}>
+                <label>
+                  Project Details / Creative Vision
+                </label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  placeholder="Tell me about your project, storytelling style, pacing, references, and goals..."
+                  rows={4}
                 />
               </div>
 
