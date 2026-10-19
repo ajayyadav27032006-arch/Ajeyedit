@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import {
   ArrowRight,
   Mail,
@@ -9,10 +9,6 @@ import {
   Loader2,
   RotateCcw,
   ExternalLink,
-  UploadCloud,
-  Link2,
-  FileText,
-  X,
 } from "lucide-react";
 import styles from "./ContactSection.module.css";
 
@@ -59,13 +55,11 @@ const initialFormData = {
   budget: "",
   timeline: "",
   description: "",
-  fileMode: "link" as "link" | "upload",
   reference: "",
 };
 
 export default function ContactSection() {
   const [formData, setFormData] = useState(initialFormData);
-  const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState<"idle" | "submitting" | "activation_needed" | "success" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState("");
   const [submittedData, setSubmittedData] = useState<{
@@ -77,11 +71,7 @@ export default function ContactSection() {
     timeline: string;
     description: string;
     reference: string;
-    fileName?: string;
-    fileSize?: string;
   } | null>(null);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -90,29 +80,10 @@ export default function ContactSection() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      // Limit file size to 25MB for email attachment
-      if (selectedFile.size > 25 * 1024 * 1024) {
-        alert("File size exceeds 25MB. For large video footage, please select 'Cloud Link' and share a Google Drive, Dropbox, or WeTransfer link.");
-        return;
-      }
-      setFile(selectedFile);
-    }
-  };
-
-  const handleRemoveFile = () => {
-    setFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
   const mailtoHref = `mailto:ajeyedit91@gmail.com?subject=${encodeURIComponent(
     `New Project Inquiry: [${formData.projectType}] - ${formData.name || "Client"}`
   )}&body=${encodeURIComponent(
-    `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || "N/A"}\nProject Type: ${formData.projectType}\nBudget: ${formData.budget || "N/A"}\nTimeline: ${formData.timeline || "N/A"}\nProject Link/Footage: ${formData.reference || (file ? `Attached: ${file.name}` : "N/A")}\n\nProject Details:\n${formData.description}`
+    `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || "N/A"}\nProject Type: ${formData.projectType}\nBudget: ${formData.budget || "N/A"}\nTimeline: ${formData.timeline || "N/A"}\nFootage/Drive Link: ${formData.reference || "N/A"}\n\nProject Details:\n${formData.description}`
   )}`;
 
   // Submit strictly via Email (FormSubmit)
@@ -131,43 +102,28 @@ export default function ContactSection() {
       timeline: formData.timeline,
       description: formData.description,
       reference: formData.reference,
-      fileName: file ? file.name : undefined,
-      fileSize: file ? `${(file.size / (1024 * 1024)).toFixed(2)} MB` : undefined,
     });
 
     try {
-      // Build FormData payload to support file attachment & email delivery to ajeyedit91@gmail.com
-      const bodyFormData = new FormData();
-      bodyFormData.append("name", formData.name);
-      bodyFormData.append("email", formData.email);
-      if (formData.phone) bodyFormData.append("phone_number", formData.phone);
-      bodyFormData.append("project_type", formData.projectType);
-      bodyFormData.append("budget", formData.budget || "Not specified");
-      bodyFormData.append("timeline", formData.timeline || "Not specified");
-      bodyFormData.append("project_vision_description", formData.description);
-
-      if (formData.reference) {
-        bodyFormData.append("footage_cloud_link", formData.reference);
-      }
-
-      if (file) {
-        bodyFormData.append("attachment", file);
-        bodyFormData.append("attached_file_info", `${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`);
-      }
-
-      bodyFormData.append(
-        "_subject",
-        `🎬 New Project Inquiry: [${formData.projectType}] from ${formData.name || "Client"}`
-      );
-      bodyFormData.append("_template", "table");
-      bodyFormData.append("_captcha", "false");
-
       const response = await fetch("https://formsubmit.co/ajax/ajeyedit91@gmail.com", {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: bodyFormData,
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || "Not provided",
+          projectType: formData.projectType,
+          budget: formData.budget || "Not specified",
+          timeline: formData.timeline || "Not specified",
+          description: formData.description,
+          reference: formData.reference || "None provided",
+          _subject: `New Project Inquiry: [${formData.projectType}] from ${formData.name || "Client"}`,
+          _template: "table",
+          _captcha: "false",
+        }),
       });
 
       const data = await response.json();
@@ -325,17 +281,9 @@ export default function ContactSection() {
                     <span className={styles.summaryValue}>{submittedData.budget}</span>
                   </div>
                 )}
-                {submittedData.fileName && (
-                  <div className={styles.summaryRow}>
-                    <span className={styles.summaryLabel}>Attached File</span>
-                    <span className={styles.summaryValue}>
-                      {submittedData.fileName} ({submittedData.fileSize})
-                    </span>
-                  </div>
-                )}
                 {submittedData.reference && (
                   <div className={styles.summaryRow}>
-                    <span className={styles.summaryLabel}>Cloud Link</span>
+                    <span className={styles.summaryLabel}>Footage Link</span>
                     <span className={styles.summaryValue} style={{ wordBreak: "break-all" }}>
                       {submittedData.reference}
                     </span>
@@ -347,7 +295,6 @@ export default function ContactSection() {
                 type="button"
                 onClick={() => {
                   setFormData(initialFormData);
-                  setFile(null);
                   setStatus("idle");
                   setSubmittedData(null);
                 }}
@@ -495,92 +442,6 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              {/* Project File or Cloud Reference Section */}
-              <div className={styles.inputGroup}>
-                <label>Project File / Raw Footage</label>
-                
-                {/* Method Tabs */}
-                <div className={styles.tabRow}>
-                  <button
-                    type="button"
-                    onClick={() => setFormData((prev) => ({ ...prev, fileMode: "link" }))}
-                    className={`${styles.tabBtn} ${formData.fileMode === "link" ? styles.tabBtnActive : ""}`}
-                  >
-                    <Link2 size={14} />
-                    <span>Cloud Link (Drive / Dropbox / WeTransfer)</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setFormData((prev) => ({ ...prev, fileMode: "upload" }))}
-                    className={`${styles.tabBtn} ${formData.fileMode === "upload" ? styles.tabBtnActive : ""}`}
-                  >
-                    <UploadCloud size={14} />
-                    <span>Upload Project File / Brief</span>
-                  </button>
-                </div>
-
-                {formData.fileMode === "link" ? (
-                  <input
-                    type="url"
-                    name="reference"
-                    value={formData.reference}
-                    onChange={handleChange}
-                    placeholder="https://drive.google.com/... or wetransfer.com/..."
-                  />
-                ) : (
-                  <div>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      id="project-file-input"
-                      onChange={handleFileChange}
-                      className={styles.fileInputHidden}
-                      accept=".pdf,.doc,.docx,.zip,.rar,.7z,.mp4,.mov,.txt,.png,.jpg,.jpeg"
-                    />
-
-                    {!file ? (
-                      <div
-                        onClick={() => fileInputRef.current?.click()}
-                        className={styles.fileUploadBox}
-                      >
-                        <div className={styles.fileUploadPlaceholder}>
-                          <div className={styles.fileUploadIconCircle}>
-                            <UploadCloud size={20} />
-                          </div>
-                          <span className={styles.fileUploadMainText}>
-                            Click to select project file or brief
-                          </span>
-                          <span className={styles.fileUploadSubText}>
-                            PDF, DOCX, ZIP, MP4, MOV up to 25MB (For larger footage, use Cloud Link)
-                          </span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className={styles.fileSelectedBox}>
-                        <div className={styles.fileSelectedInfo}>
-                          <FileText size={22} color="#E6D6C3" />
-                          <div>
-                            <div className={styles.fileSelectedName}>{file.name}</div>
-                            <div className={styles.fileSelectedSize}>
-                              {(file.size / (1024 * 1024)).toFixed(2)} MB
-                            </div>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={handleRemoveFile}
-                          className={styles.removeFileBtn}
-                          aria-label="Remove attached file"
-                        >
-                          <X size={15} />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-
               {/* Project Details / Vision */}
               <div className={styles.inputGroup}>
                 <label>
@@ -593,6 +454,18 @@ export default function ContactSection() {
                   placeholder="Tell me about your project, storytelling style, pacing, references, and goals..."
                   rows={4}
                   required
+                />
+              </div>
+
+              {/* Footage / Drive Reference Link */}
+              <div className={styles.inputGroup}>
+                <label>Footage / Drive Reference Link</label>
+                <input
+                  type="url"
+                  name="reference"
+                  value={formData.reference}
+                  onChange={handleChange}
+                  placeholder="https://drive.google.com/... or wetransfer.com/..."
                 />
               </div>
 
