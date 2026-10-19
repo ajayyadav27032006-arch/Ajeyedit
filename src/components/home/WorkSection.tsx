@@ -196,6 +196,9 @@ export default function WorkSection() {
         contactElem.scrollIntoView({ behavior: "smooth" });
       }
     }
+    setTimeout(() => {
+      document.querySelector<HTMLInputElement>("#contact input[name='name']")?.focus();
+    }, 700);
   };
 
   return (

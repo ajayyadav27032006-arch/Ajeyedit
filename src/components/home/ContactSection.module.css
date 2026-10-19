@@ -440,6 +440,295 @@
   margin-left: 0.2rem;
 }
 
+/* File Upload & Mode Tabs */
+.tabRow {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(247, 243, 237, 0.04);
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid rgba(211, 194, 174, 0.15);
+}
+
+.tabBtn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-pearl);
+  opacity: 0.7;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tabBtn:hover {
+  opacity: 1;
+  color: var(--color-warm-white);
+}
+
+.tabBtnActive {
+  background: rgba(230, 214, 195, 0.15);
+  color: var(--color-warm-white);
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(230, 214, 195, 0.2);
+}
+
+.fileUploadBox {
+  border: 1.5px dashed rgba(211, 194, 174, 0.3);
+  background: rgba(247, 243, 237, 0.02);
+  border-radius: 10px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.fileUploadBox:hover {
+  border-color: var(--color-pearl);
+  background: rgba(247, 243, 237, 0.05);
+}
+
+.fileUploadPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fileUploadIconCircle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(230, 214, 195, 0.08);
+  border: 1px solid rgba(230, 214, 195, 0.2);
+  color: var(--color-pearl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fileUploadMainText {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-warm-white);
+}
+
+.fileUploadSubText {
+  font-family: var(--font-body);
+  font-size: 0.725rem;
+  color: var(--color-pearl);
+  opacity: 0.7;
+}
+
+.fileInputHidden {
+  display: none;
+}
+
+.fileSelectedBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: rgba(247, 243, 237, 0.06);
+  border: 1px solid rgba(211, 194, 174, 0.25);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.fileSelectedInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  overflow: hidden;
+}
+
+.fileSelectedName {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-warm-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+
+.fileSelectedSize {
+  font-family: var(--font-body);
+  font-size: 0.725rem;
+  color: var(--color-pearl);
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+.removeFileBtn {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.removeFileBtn:hover {
+  background: rgba(239, 68, 68, 0.35);
+  color: #fff;
+}
+
+/* Button Group with WhatsApp & Email options */
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.whatsappDirectBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: rgba(37, 211, 102, 0.12);
+  color: #4ade80;
+  padding: 0.85rem 1.75rem;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid rgba(37, 211, 102, 0.35);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.whatsappDirectBtn:hover {
+  background: rgba(37, 211, 102, 0.22);
+  border-color: #25D366;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.deliveryNotice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-pearl);
+  opacity: 0.8;
+  margin: 0.25rem 0 0 0;
+  text-align: center;
+}
+
+.deliveryNotice strong {
+  color: var(--color-warm-white);
+}
+
+/* Enhanced Success Elements */
+.successBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.badgeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badgeEmail {
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #93c5fd;
+}
+
+.badgeWhatsapp {
+  background: rgba(37, 211, 102, 0.12);
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  color: #86efac;
+}
+
+.successActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 1.5rem;
+}
+
+.successWhatsappBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #ffffff;
+  padding: 0.95rem 1.75rem;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 0.925rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.successWhatsappBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+  color: #ffffff;
+}
+
+.successMailBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(247, 243, 237, 0.08);
+  border: 1px solid rgba(211, 194, 174, 0.25);
+  color: var(--color-warm-white);
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.successMailBtn:hover {
+  background: rgba(247, 243, 237, 0.15);
+  border-color: var(--color-pearl);
+}
+
 @media (max-width: 1024px) {
   .container {
     grid-template-columns: 1fr;
