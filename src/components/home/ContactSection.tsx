@@ -13,12 +13,10 @@ import {
   Link2,
   FileText,
   X,
-  Phone,
-  Send,
 } from "lucide-react";
 import styles from "./ContactSection.module.css";
 
-// Authentic WhatsApp Brand Logo SVG
+// Authentic WhatsApp Brand Logo SVG (for left social links & contact card)
 function WhatsappIcon({ size = 18 }: { size?: number }) {
   return (
     <svg
@@ -111,66 +109,17 @@ export default function ContactSection() {
     }
   };
 
-  // Build formatted WhatsApp message text
-  const buildWhatsAppMessage = (
-    data: typeof initialFormData,
-    attachedFile: File | null = file
-  ) => {
-    const parts = [
-      `🎬 *NEW PROJECT INQUIRY - AJEY EDIT*`,
-      `──────────────────────────`,
-      `👤 *Client Name:* ${data.name.trim() || "Visitor"}`,
-      `📧 *Email:* ${data.email.trim() || "Not specified"}`,
-      data.phone.trim() ? `📱 *Phone / WhatsApp:* ${data.phone.trim()}` : null,
-      `🎯 *Project Type:* ${data.projectType}`,
-      data.budget.trim() ? `💰 *Estimated Budget:* ${data.budget.trim()}` : null,
-      data.timeline.trim() ? `⏱ *Estimated Timeline:* ${data.timeline.trim()}` : null,
-      data.reference.trim() ? `📁 *Project / Footage Link:* ${data.reference.trim()}` : null,
-      attachedFile
-        ? `📎 *File Attached:* ${attachedFile.name} (${(attachedFile.size / (1024 * 1024)).toFixed(2)} MB)`
-        : null,
-      ``,
-      `📝 *Project Details / Creative Vision:*`,
-      data.description.trim() || "No details provided yet.",
-      `──────────────────────────`,
-      `_Sent via ajey.edit portfolio "Start a Project"_`,
-    ].filter(Boolean);
-
-    return parts.join("\n");
-  };
-
-  const getWhatsAppUrl = (
-    data: typeof initialFormData = formData,
-    attachedFile: File | null = file
-  ) => {
-    const text = buildWhatsAppMessage(data, attachedFile);
-    return `https://wa.me/917766036398?text=${encodeURIComponent(text)}`;
-  };
-
   const mailtoHref = `mailto:ajeyedit91@gmail.com?subject=${encodeURIComponent(
     `New Project Inquiry: [${formData.projectType}] - ${formData.name || "Client"}`
   )}&body=${encodeURIComponent(
-    `Name: ${formData.name}\nEmail: ${formData.email}\nPhone/WhatsApp: ${formData.phone || "N/A"}\nProject Type: ${formData.projectType}\nBudget: ${formData.budget || "N/A"}\nTimeline: ${formData.timeline || "N/A"}\nProject Link/Footage: ${formData.reference || (file ? `Attached: ${file.name}` : "N/A")}\n\nProject Details:\n${formData.description}`
+    `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || "N/A"}\nProject Type: ${formData.projectType}\nBudget: ${formData.budget || "N/A"}\nTimeline: ${formData.timeline || "N/A"}\nProject Link/Footage: ${formData.reference || (file ? `Attached: ${file.name}` : "N/A")}\n\nProject Details:\n${formData.description}`
   )}`;
 
-  // Quick Direct WhatsApp Trigger (Opens chat immediately with filled data)
-  const handleDirectWhatsAppClick = () => {
-    if (!formData.name.trim()) {
-      alert("Please enter your name first so Ajay knows who is reaching out.");
-      return;
-    }
-    const waUrl = getWhatsAppUrl(formData, file);
-    window.open(waUrl, "_blank", "noopener,noreferrer");
-  };
-
-  // Submit via FormSubmit (Email) + trigger WhatsApp
+  // Submit strictly via Email (FormSubmit)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
     setStatusMessage("");
-
-    // Prepare WhatsApp URL
-    const waUrl = getWhatsAppUrl(formData, file);
 
     // Save submitted data for confirmation screen
     setSubmittedData({
@@ -187,11 +136,11 @@ export default function ContactSection() {
     });
 
     try {
-      // Build FormData payload to support file upload & email delivery
+      // Build FormData payload to support file attachment & email delivery to ajeyedit91@gmail.com
       const bodyFormData = new FormData();
       bodyFormData.append("name", formData.name);
       bodyFormData.append("email", formData.email);
-      if (formData.phone) bodyFormData.append("phone_whatsapp", formData.phone);
+      if (formData.phone) bodyFormData.append("phone_number", formData.phone);
       bodyFormData.append("project_type", formData.projectType);
       bodyFormData.append("budget", formData.budget || "Not specified");
       bodyFormData.append("timeline", formData.timeline || "Not specified");
@@ -212,13 +161,6 @@ export default function ContactSection() {
       );
       bodyFormData.append("_template", "table");
       bodyFormData.append("_captcha", "false");
-
-      // Auto-open WhatsApp chat in new window
-      try {
-        window.open(waUrl, "_blank", "noopener,noreferrer");
-      } catch (popupErr) {
-        console.warn("Popup prevented direct WhatsApp redirect:", popupErr);
-      }
 
       const response = await fetch("https://formsubmit.co/ajax/ajeyedit91@gmail.com", {
         method: "POST",
@@ -243,12 +185,13 @@ export default function ContactSection() {
             "FormSubmit requires one-time activation. Please check your Gmail (ajeyedit91@gmail.com) and click 'Activate Form'."
         );
       } else {
-        setStatus("success"); // Still mark as success because WhatsApp is already connected!
+        setStatus("error");
+        setStatusMessage(data.message || "Failed to deliver inquiry. Please email directly or try again.");
       }
     } catch (err: unknown) {
       console.error("Project submission error:", err);
-      // Even if network fails, the WhatsApp link is generated and available
-      setStatus("success");
+      setStatus("error");
+      setStatusMessage("Could not connect to submission service. Please use the direct mail button below.");
     }
   };
 
@@ -268,7 +211,7 @@ export default function ContactSection() {
           </h2>
 
           <p className={styles.subtitle}>
-            Let&apos;s turn your footage into something worth watching. Submit your project details below &mdash; it will be delivered directly to my email and WhatsApp (+91 7766036398).
+            Let&apos;s turn your footage into something worth watching. Whether you have raw interviews, high-energy reels &mdash; I&apos;m ready to collaborate.
           </p>
 
           <div className={styles.contactCards}>
@@ -337,60 +280,18 @@ export default function ContactSection() {
           </div>
         </div>
 
-        {/* Right Form Column */}
+        {/* Right Form Column - Start a Project */}
         <div className={styles.formContent}>
           {status === "success" && submittedData ? (
             <div className={styles.successBox}>
               <div className={styles.successIconCircle}>
                 <CheckCircle2 size={36} />
               </div>
-              <h3 className={styles.successHeading}>Project Submitted!</h3>
+              <h3 className={styles.successHeading}>Project Inquiry Sent!</h3>
               <p className={styles.successMessage}>
-                Thank you, <strong>{submittedData.name}</strong>! Your project inquiry has been processed and connected to my email and WhatsApp.
+                Thank you, <strong>{submittedData.name}</strong>! Your project details have been sent directly to{" "}
+                <strong>ajeyedit91@gmail.com</strong>. I&apos;ll review your footage &amp; vision and get back to you within 24 hours.
               </p>
-
-              {/* Delivery Badges */}
-              <div className={styles.successBadges}>
-                <div className={`${styles.badgeItem} ${styles.badgeEmail}`}>
-                  <Mail size={13} />
-                  <span>Delivered to ajeyedit91@gmail.com</span>
-                </div>
-                <div className={`${styles.badgeItem} ${styles.badgeWhatsapp}`}>
-                  <WhatsappIcon size={13} />
-                  <span>Ready on WhatsApp (+91 7766036398)</span>
-                </div>
-              </div>
-
-              {/* Action Buttons for Client */}
-              <div className={styles.successActions}>
-                <a
-                  href={`https://wa.me/917766036398?text=${encodeURIComponent(
-                    buildWhatsAppMessage({
-                      name: submittedData.name,
-                      email: submittedData.email,
-                      phone: submittedData.phone,
-                      projectType: submittedData.projectType,
-                      budget: submittedData.budget,
-                      timeline: submittedData.timeline,
-                      description: submittedData.description,
-                      reference: submittedData.reference,
-                      fileMode: "link",
-                    })
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={styles.successWhatsappBtn}
-                >
-                  <WhatsappIcon size={20} />
-                  <span>Open Chat on WhatsApp (+91 7766036398)</span>
-                  <ExternalLink size={16} />
-                </a>
-
-                <a href={mailtoHref} className={styles.successMailBtn}>
-                  <Mail size={15} />
-                  <span>Send Direct Backup Email</span>
-                </a>
-              </div>
 
               {/* Summary Details */}
               <div className={styles.successSummary}>
@@ -404,7 +305,7 @@ export default function ContactSection() {
                 </div>
                 {submittedData.phone && (
                   <div className={styles.summaryRow}>
-                    <span className={styles.summaryLabel}>Phone / WhatsApp</span>
+                    <span className={styles.summaryLabel}>Phone</span>
                     <span className={styles.summaryValue}>{submittedData.phone}</span>
                   </div>
                 )}
@@ -467,22 +368,21 @@ export default function ContactSection() {
                       <p style={{ margin: "0.35rem 0 0.6rem 0" }}>
                         FormSubmit has sent a one-time activation email to <strong>ajeyedit91@gmail.com</strong>.
                         Please open your Gmail inbox and click <strong>&quot;Activate Form&quot;</strong>.
-                        You can also send your project directly via WhatsApp below.
+                        Once confirmed, every project inquiry will arrive instantly in your inbox!
                       </p>
                       <div className={styles.alertActions} style={{ marginLeft: 0 }}>
                         <a
-                          href={getWhatsAppUrl(formData, file)}
+                          href="https://mail.google.com"
                           target="_blank"
                           rel="noreferrer"
                           className={styles.fallbackMailBtn}
-                          style={{ background: "#25D366", color: "#fff" }}
                         >
-                          <WhatsappIcon size={14} />
-                          <span>Send to WhatsApp (+91 7766036398)</span>
+                          <ExternalLink size={13} />
+                          <span>Open Gmail</span>
                         </a>
                         <a href={mailtoHref} className={styles.fallbackMailBtn}>
                           <Mail size={13} />
-                          <span>Direct Gmail</span>
+                          <span>Send via Direct Email</span>
                         </a>
                       </div>
                     </div>
@@ -496,17 +396,7 @@ export default function ContactSection() {
                     <AlertCircle size={20} />
                     <div style={{ flex: 1 }}>
                       <p style={{ margin: 0 }}>{statusMessage || "Delivery encountered a temporary issue."}</p>
-                      <div style={{ marginTop: "0.6rem", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                        <a
-                          href={getWhatsAppUrl(formData, file)}
-                          target="_blank"
-                          rel="noreferrer"
-                          className={styles.fallbackMailBtn}
-                          style={{ background: "#25D366", color: "#fff" }}
-                        >
-                          <WhatsappIcon size={14} />
-                          <span>Send via WhatsApp (+91 7766036398)</span>
-                        </a>
+                      <div style={{ marginTop: "0.6rem" }}>
                         <a href={mailtoHref} className={styles.fallbackMailBtn}>
                           <Mail size={13} />
                           <span>Send directly to ajeyedit91@gmail.com</span>
@@ -548,11 +438,11 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              {/* Phone / WhatsApp & Project Type Row */}
+              {/* Phone & Project Type Row */}
               <div className={styles.inputRow}>
                 <div className={styles.inputGroup}>
                   <label>
-                    Your WhatsApp / Phone Number
+                    Phone Number
                   </label>
                   <input
                     type="tel"
@@ -706,39 +596,24 @@ export default function ContactSection() {
                 />
               </div>
 
-              {/* Action Buttons */}
-              <div className={styles.buttonGroup}>
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className={styles.submitBtn}
-                >
-                  {status === "submitting" ? (
-                    <>
-                      <Loader2 size={17} className={styles.spinner} />
-                      <span>Sending Project Details...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Start a Project</span>
-                      <ArrowRight size={17} />
-                    </>
-                  )}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleDirectWhatsAppClick}
-                  className={styles.whatsappDirectBtn}
-                >
-                  <WhatsappIcon size={17} />
-                  <span>Send directly via WhatsApp (+91 7766036398)</span>
-                </button>
-
-                <p className={styles.deliveryNotice}>
-                  Delivered to <strong>ajeyedit91@gmail.com</strong> and WhatsApp <strong>+91 7766036398</strong>
-                </p>
-              </div>
+              {/* Submit Button - Strictly "Start a Project" (Email Only) */}
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                className={styles.submitBtn}
+              >
+                {status === "submitting" ? (
+                  <>
+                    <Loader2 size={17} className={styles.spinner} />
+                    <span>Sending Project Details...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Start a Project</span>
+                    <ArrowRight size={17} />
+                  </>
+                )}
+              </button>
             </form>
           )}
         </div>
